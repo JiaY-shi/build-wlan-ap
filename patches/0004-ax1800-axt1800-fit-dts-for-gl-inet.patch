@@ -1,0 +1,187 @@
+From 18d78ed9539de2a5c0c0c8bf5a37a37146bd736b Mon Sep 17 00:00:00 2001
+From: JiaY-shi <shi05275@163.com>
+Date: Sat, 1 Apr 2023 16:42:01 +0800
+Subject: [PATCH 4/5] ax1800 axt1800 fit dts for gl-inet
+
+---
+ .../boot/dts/qcom/qcom-ipq6018-gl-ax1800.dtsi | 60 +++++++------------
+ .../boot/dts/qcom/qcom-ipq6018-gl-axt1800.dts | 39 ++++++++++--
+ 2 files changed, 56 insertions(+), 43 deletions(-)
+
+diff --git a/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-ax1800.dtsi b/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-ax1800.dtsi
+index fcc1c5f6..6542bafa 100644
+--- a/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-ax1800.dtsi
++++ b/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-ax1800.dtsi
+@@ -16,7 +16,6 @@
+  */
+ 
+ #include "ipq6018.dtsi"
+-#include "ipq6018-cpr-regulator.dtsi"
+ #include <dt-bindings/input/input.h>
+ 
+ / {
+@@ -29,11 +28,6 @@
+ 		ethernet0 = "/soc/dp1";
+ 		ethernet1 = "/soc/dp2";
+ 		ethernet2 = "/soc/dp3";
+-
+-		led-boot = &led_run;
+-		led-failsafe = &led_run;
+-		led-running = &led_run;
+-		led-upgrade = &led_run;
+ 	};
+ 
+ 	chosen {
+@@ -242,7 +236,7 @@
+ 		pinctrl-0 = <&leds_pins>;
+ 		pinctrl-names = "default";
+ 
+-		led_run: led@35 {
++		led@35 {
+ 			label = "white:sys";
+ 			gpios = <&tlmm 35 GPIO_ACTIVE_HIGH>;
+ 			default-state = "on";
+@@ -275,6 +269,18 @@
+ 			debounce-interval = <60>;
+ 		};
+ 	};
++	
++	gpio-export {
++		compatible = "gpio-export";
++		pinctrl-0 = <&usb_pins>;
++		pinctrl-names = "default";
++
++		usb_power {
++			gpio-export,name = "usb_power";
++			gpio-export,output = <1>;
++			gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
++		};
++	};
+ };
+ 
+ &blsp1_uart3 {
+@@ -320,45 +326,21 @@
+ };
+ 
+ &CPU0 {
+-	operating-points = <
+-		/* kHz   uV (fixed) */
+-		864000   1100000
+-		1056000  1100000
+-		1200000  1100000
+-		1608000  1100000
+-	>;
+-	clock-latency = <200000>;
++	/delete-property/ cpu-supply;
+ };
+ 
+ &CPU1 {
+-	operating-points = <
+-		/* kHz   uV (fixed) */
+-		864000   1100000
+-		1056000  1100000
+-		1200000  1100000
+-		1608000  1100000
+-	>;
+-	clock-latency = <200000>;
++	/delete-property/ cpu-supply;
+ };
+ 
+ &CPU2 {
+-	operating-points = <
+-		/* kHz   uV (fixed) */
+-		864000   1100000
+-		1056000  1100000
+-		1200000  1100000
+-		1608000  1100000
+-	>;
+-	clock-latency = <200000>;
++	/delete-property/ cpu-supply;
+ };
+ 
+ &CPU3 {
+-	operating-points = <
+-		/* kHz   uV (fixed) */
+-		864000   1100000
+-		1056000  1100000
+-		1200000  1100000
+-		1608000  1100000
+-	>;
+-	clock-latency = <200000>;
++	/delete-property/ cpu-supply;
++};
++
++&rpm_glink {
++	status = "disabled";
+ };
+diff --git a/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-axt1800.dts b/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-axt1800.dts
+index 0e5de3f1..419ffbcc 100644
+--- a/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-axt1800.dts
++++ b/feeds/ipq807x_v5.4/ipq60xx/files/arch/arm64/boot/dts/qcom/qcom-ipq6018-gl-axt1800.dts
+@@ -24,6 +24,23 @@
+ 	aliases {
+ 		sdhc0 = &sdhc_2;
+ 	};
++
++	V30:V30 {
++		compatible = "regulator-fixed";
++		regulator-name = "vmmc-supply";
++		regulator-min-microvolt = <3000000>;
++		regulator-max-microvolt = <3000000>;
++		regulator-always-on;
++	};
++
++	V18:V18 {
++		compatible = "regulator-fixed";
++		regulator-name = "vqmmc-supply";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-always-on;
++	};
++
+ };
+ 
+ &tlmm {
+@@ -73,15 +90,27 @@
+ 		status = "ok";
+ 	};
+ 
+-	pwm-fan {
++	fan0: pwm-fan  {
+ 		compatible = "pwm-fan";
+ 		pinctrl-0 = <&fan_pins>;
+ 		pinctrl-names = "default";
+ 		cooling-min-state = <0>;
+-		cooling-max-state = <3>;
++		cooling-max-state = <255>;
+ 		#cooling-cells = <2>;
+-		pwms = <&pwm 1 255>;
+-		cooling-levels = <0 150 200 255>;
++		pwms = <&pwm 1 40000 0>;
++		cooling-levels = <0 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36
++				36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 36 37 38 39
++				40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59
++				60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79
++				80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99
++				100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119
++				120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139
++				140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159
++				160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179
++				180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199
++				200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219
++				220 221 222 223 224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239
++				240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255>;
+ 	};
+ };
+ 
+@@ -90,5 +119,7 @@
+ 	pinctrl-names = "default";
+ 	cd-gpios = <&tlmm 62 1>;
+ 	sd-ldo-gpios = <&tlmm 66 1>;
++	vqmmc-supply = <&V18>;
++	vmmc-supply = <&V30>;
+ 	status = "ok";
+ };
+-- 
+2.34.1
+

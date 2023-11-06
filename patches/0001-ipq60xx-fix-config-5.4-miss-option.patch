@@ -1,0 +1,24 @@
+From 722665551a5d9748f5e17ec2c70118aa4adbb81a Mon Sep 17 00:00:00 2001
+From: JiaY-shi <shi05275@163.com>
+Date: Sat, 1 Apr 2023 16:29:14 +0800
+Subject: [PATCH 1/5] ipq60xx: fix config-5.4 miss option
+
+---
+ feeds/ipq807x_v5.4/ipq60xx/config-5.4 | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/feeds/ipq807x_v5.4/ipq60xx/config-5.4 b/feeds/ipq807x_v5.4/ipq60xx/config-5.4
+index 8812417a..953ef4b7 100644
+--- a/feeds/ipq807x_v5.4/ipq60xx/config-5.4
++++ b/feeds/ipq807x_v5.4/ipq60xx/config-5.4
+@@ -561,6 +561,7 @@ CONFIG_IOMMU_HELPER=y
+ # CONFIG_ION_MSM is not set
+ # CONFIG_ION_TEST is not set
+ # CONFIG_IO_URING is not set
++# CONFIG_IP6_NF_TARGET_MASQUERADE is not set
+ # CONFIG_IPA is not set
+ # CONFIG_IPA3 is not set
+ # CONFIG_IPC_LOGGING is not set
+-- 
+2.34.1
+

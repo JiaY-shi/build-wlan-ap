@@ -1,0 +1,19 @@
+profile: glinet_ax1800
+description: Build image for the GL.iNET AX1800
+image: bin/targets/ipq60xx/generic/openwrt-ipq60xx-glinet_ax1800-squashfs-sysupgrade.tar
+include:
+  - glinet
+
+packages:
+  - ddns-scripts
+  - ddns-scripts_aliyun
+  - ddns-scripts-services
+  - luci-app-adguardhome
+  - luci-app-ddns
+  - luci-app-eqos
+  - luci-app-ssr-plus
+  - luci-app-vlmcsd
+  - luci-app-wireguard
+  - wireguard
+  - wireguard-tools
+

@@ -1,0 +1,23 @@
+#!/bin/sh
+. /lib/functions/uci-defaults.sh
+
+board=$(board_name)
+
+#set system
+uci set system.@system[0].timezone=CST-8
+uci set system.@system[0].zonename=Asia/Shanghai
+uci del system.led_wan
+uci commit system
+
+
+#set firewall
+uci set firewall.@defaults[0].forward='ACCEPT'
+uci set firewall.@zone[1].input='ACCEPT'
+uci set firewall.@zone[1].forward='ACCEPT'
+uci set firewall.@zone[1].output='ACCEPT'
+uci commit firewall
+
+#set crontab
+echo "10 2 * * 6 sleep 70 && touch /etc/banner && reboot" > /etc/crontabs/root
+
+exit 0

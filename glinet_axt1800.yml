@@ -1,0 +1,9 @@
+profile: glinet_axt1800
+description: Build image for the GL.iNET AXT1800
+image: bin/targets/ipq60xx/generic/openwrt-ipq60xx-glinet_axt1800-squashfs-sysupgrade.tar
+
+include:
+  - glinet
+
+packages:
+  - kmod-hwmon-pwmfan

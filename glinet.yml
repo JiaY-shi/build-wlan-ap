@@ -1,0 +1,97 @@
+
+---
+target: ipq60xx
+subtarget: generic
+feeds:
+  - name: ipq60xx
+    path: ../../feeds/ipq807x_v5.4
+  - name: custom
+    path: ../../feeds/custom
+  - name: helloworld
+    uri: https://github.com/fw876/helloworld.git
+    branch: main
+  - name: gl_feeds
+    uri: https://github.com/gl-inet/gl-feeds.git
+    branch: common
+
+
+packages:
+  - ipq60xx
+  - blkid
+  - block-mount
+  - ca-certificates
+  - chat
+  - comgt
+  - curl
+  - dnsmasq-full
+  - dosfstools
+  - e2fsprogs
+  - ethtool
+  - ip-full
+  - iptables-mod-extra
+  - iptables-mod-filter
+  - iptables-mod-tproxy
+  - iwinfo
+  - kmod-fs-exfat
+  - kmod-fs-ext4
+  - kmod-fs-ntfs
+  - kmod-fs-vfat
+  - kmod-ifb
+  - kmod-inet-diag
+  - kmod-ipt-nat6
+  - kmod-mtdoops
+  - kmod-sched-core
+  - kmod-usb-acm
+  - kmod-usb-net-cdc-ether
+  - kmod-usb-net-huawei-cdc-ncm
+  - kmod-usb-net-ipheth
+  - kmod-usb-net-qmi-wwan
+  - kmod-usb-net-rndis
+  - kmod-usb-ohci
+  - kmod-usb-serial
+  - kmod-usb-serial-ch341
+  - kmod-usb-serial-option
+  - kmod-usb-serial-wwan
+  - kmod-usb-storage
+  - kmod-usb-uhci
+  - kmod-usb2
+  - libcurl
+  - luci
+  - luci-app-commands
+  - luci-app-firewall
+  - luci-app-opkg
+  - luci-base
+  - luci-mod-admin-full
+  - luci-mod-rpc
+  - luci-proto-ipv6
+  - luci-app-uhttpd
+  - luci-proto-ppp
+  - luci-proto-vxlan
+  - ntfs-3g
+  - ntfs-3g-utils
+  - openssl-util
+  - relayd
+  - uqmi
+  - usb-modeswitch
+  - usbmuxd
+  - vxlan
+  - wget-ssl
+  - wireless-regdb
+  - wpad-openssl
+  - qrencode
+  - luci-app-wol
+  - htop
+
+diffconfig: |
+  CONFIG_BUSYBOX_CONFIG_FEATURE_FLOAT_SLEEP=y
+  CONFIG_BUSYBOX_CUSTOM=y
+  CONFIG_LIBCURL_MBEDTLS=n
+  CONFIG_LIBCURL_OPENSSL=y
+  CONFIG_LUCI_LANG_zh_Hans=y
+  CONFIG_OPENSSL_OPTIMIZE_SPEED=y
+  CONFIG_PACKAGE_dnsmasq=n
+  CONFIG_PACKAGE_luci-i18n-adguardhome-zh-cn=y
+  CONFIG_PACKAGE_luci-i18n-ddns-zh-cn=y
+  CONFIG_PACKAGE_wpad-basic=n
+  CONFIG_PACKAGE_wpad=n
+  CONFIG_SIGNATURE_CHECK=n
