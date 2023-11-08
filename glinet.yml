@@ -41,7 +41,18 @@ packages:
   - kmod-ipt-nat6
   - kmod-mtdoops
   - kmod-sched-core
-  - kmod-usb-storage
+  - kmod-usb-acm
+  - kmod-usb-net-cdc-ether
+  - kmod-usb-net-huawei-cdc-ncm
+  - kmod-usb-net-ipheth
+  - kmod-usb-net-qmi-wwan
+  - kmod-usb-net-rndis
+  - kmod-usb-ohci
+  - kmod-usb-serial
+  - kmod-usb-serial-ch341
+  - kmod-usb-serial-option
+  - kmod-usb-serial-wwan
+  - kmod-usb-uhci
   - kmod-usb2
   - libcurl
   - luci
