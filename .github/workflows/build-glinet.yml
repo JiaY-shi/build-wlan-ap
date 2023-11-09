@@ -12,11 +12,6 @@ on:
         options:
           - glinet_ax1800
           - glinet_axt1800
-
-      default-settings:
-        description: '是否包含default-settings'
-        required: true
-        type: boolean
         
 jobs:
   build:
@@ -30,12 +25,6 @@ jobs:
         sudo apt install python build-essential libncurses5-dev gawk git libssl-dev gettext zlib1g-dev swig unzip time rsync python3 python3-setuptools python3-yaml subversion -y
         git config --global user.email "shi05275@163.com"
         git config --global user.name "JiaY-shi"
-
-    - name: Set Default Settings
-      if: ${{ inputs.default-settings }}
-      run: |
-        sed -i '/packages/a \  - default-settings' glinet.yml
-
     - name: make 
       run: |
         ./build.sh ~ ${{ inputs.device }}
@@ -49,22 +38,20 @@ jobs:
         cd ~/wlan-ap/openwrt/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
-
+        echo "status=success" >> $GITHUB_OUTPUT 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled() && !failure()
       with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        name: OpenWrt_firmware
         path: ${{ env.FIRMWARE }}
 
     - name: Generate release tag
       id: tag
       if: true && !failure() && !cancelled()
       run: |
-        echo "release_tag=${{inputs.device}}.$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT 
-
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled() && !failure()
