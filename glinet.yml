@@ -94,3 +94,11 @@ diffconfig: |
   CONFIG_PACKAGE_wpad-basic=n
   CONFIG_PACKAGE_wpad=n
   CONFIG_SIGNATURE_CHECK=n
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ChinaDNS_NG=n
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_MosDNS=n
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Libev_Client=n
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_NONE_Client=y
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_NONE_Server=y
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Client=n
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust_Server=n
+  CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Simple_Obfs=n
